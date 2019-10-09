@@ -8,10 +8,13 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
-steps:
-- script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel build
+jobs:
+- job:'build_tensorflow'
   displayName: 'Build tensorflow'
-
-- script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python...
-  displayName: 'Test tensorflow python'
+  steps:
+  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel build
+    displayName: 'Build tensorflow'
+- job: 'test_tensorflow_python'
+  displayName: 'Test tensorflow'
+  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/...
+    displayName: 'Test tensorflow'
