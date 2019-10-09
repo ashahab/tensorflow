@@ -17,5 +17,5 @@ jobs:
 - job: test_tensorflow
   displayName: Test tensorflow
   steps:
-  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/...
+  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python/...
     displayName: Build tensorflow
