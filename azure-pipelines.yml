@@ -10,6 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 jobs:
 - job: build_tensorflow_cpu
+  timeoutInMinutes: 120
   displayName: Build and test tensorflow on cpu
   steps:
   - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel build
