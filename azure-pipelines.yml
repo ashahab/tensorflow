@@ -26,10 +26,10 @@ jobs:
   displayName: Build and test tensorflow
   steps:
   - bash: >-
-      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel $(mkl) 
-      build //tensorflow/java:tensorflow //tensorflow/java:libtensorflow_jni 
+      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel build $(mkl) 
+      //tensorflow/java:tensorflow //tensorflow/java:libtensorflow_jni 
     displayName: Build tensorflow java
   - bash: >-
-      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel $(mkl) 
-      build //tensorflow/tools/pip_package:build_pip_package
+      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel build $(mkl) 
+      //tensorflow/tools/pip_package:build_pip_package
     displayName: Build tensorflow pip package
