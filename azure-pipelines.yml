@@ -9,11 +9,21 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 jobs:
-- job: build_tensorflow_cpu
-  timeoutInMinutes: 120
-  displayName: Build and test tensorflow on cpu
+- job: build_tensorflow
+  strategy:
+    maxParallel: 2
+    matrix: 
+      GPU:
+        processor: GPU
+        config: ""
+      CPU:
+        processor: CPU
+        config: ""
+      CPU_MKL:
+        processor: CPU
+        config: --config=mkl
+  timeoutInMinutes: 60
+  displayName: Build and test tensorflow
   steps:
-  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel build
+  - script: ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel ${config} build
     displayName: Build tensorflow
-  - script: ./tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/python/...
-    displayName: Test tensorflow python
