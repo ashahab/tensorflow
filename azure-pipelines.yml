@@ -15,15 +15,25 @@ jobs:
     matrix: 
       GPU:
         processor: GPU
-        config: ""
+        mkl: ""
       CPU:
         processor: CPU
-        config: ""
+        mkl: ""
       CPU_MKL:
         processor: CPU
-        config: --config=mkl
-  timeoutInMinutes: 60
+        mkl: --config=mkl
+  timeoutInMinutes: 360
   displayName: Build and test tensorflow
   steps:
-  - script: ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel ${config} build
-    displayName: Build tensorflow
+  - bash: >-
+      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel
+      --config=noaws --config=nogcp --config=noignite --config=nokafka 
+      --keep_going --verbose_failures --test_output=all $(mkl) 
+      build //tensorflow/java:tensorflow //tensorflow/java:libtensorflow_jni 
+    displayName: Build tensorflow java
+  - bash: >-
+      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel
+      --config=noaws --config=nogcp --config=noignite --config=nokafka 
+      --keep_going --verbose_failures --test_output=all $(mkl) 
+      build //tensorflow/tools/pip_package:build_pip_package
+    displayName: Build tensorflow pip package
