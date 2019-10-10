@@ -27,13 +27,11 @@ jobs:
   steps:
   - bash: >-
       ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel
-      --config=noaws --config=nogcp --config=noignite --config=nokafka 
       --keep_going --verbose_failures --test_output=all $(mkl) 
       build //tensorflow/java:tensorflow //tensorflow/java:libtensorflow_jni 
     displayName: Build tensorflow java
   - bash: >-
       ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel
-      --config=noaws --config=nogcp --config=noignite --config=nokafka 
       --keep_going --verbose_failures --test_output=all $(mkl) 
       build //tensorflow/tools/pip_package:build_pip_package
     displayName: Build tensorflow pip package
