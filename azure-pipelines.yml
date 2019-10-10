@@ -15,7 +15,7 @@ jobs:
     matrix: 
       GPU:
         processor: GPU
-        mkl: "--config=opt --config=cuda"
+        mkl: --config=opt --config=cuda
       CPU:
         processor: CPU
         mkl: ""
@@ -27,9 +27,11 @@ jobs:
   steps:
   - bash: >-
       ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel build $(mkl) 
+      --keep_going --verbose_failures --test_output=all
       //tensorflow/java:tensorflow //tensorflow/java:libtensorflow_jni 
     displayName: Build tensorflow java
   - bash: >-
-      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel build $(mkl) 
+      ./tensorflow/tools/ci_build/ci_build.sh $(processor) bazel build $(mkl)
+      --keep_going --verbose_failures --test_output=all
       //tensorflow/tools/pip_package:build_pip_package
     displayName: Build tensorflow pip package
